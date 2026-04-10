@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Jelentkezés | Armada Security</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #050505;
+    font-family: 'Rajdhani', 'Segoe UI', Arial, sans-serif;
+    color: #e0e0e0;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(196,0,0,0.03) 2px, rgba(196,0,0,0.03) 4px),
+      radial-gradient(circle at 30% 40%, rgba(196,0,0,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c40000;
+    border-radius: 3px;
+  }
+
+  header {
+    background: rgba(5,5,5,0.95);
+    backdrop-filter: blur(12px);
+    padding: 20px 40px;
+    text-align: center;
+    border-bottom: 1px solid rgba(196,0,0,0.3);
+    box-shadow: 0 5px 30px rgba(0,0,0,0.8);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  header h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #ffffff, #c40000, #ff0000);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: shine 3s linear infinite;
+  }
+
+  @keyframes shine {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  header p {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: #c40000;
+    text-transform: uppercase;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #c40000;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+  }
+
+  .back-link:hover {
+    color: #ff4444;
+    text-shadow: 0 0 5px #c40000;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .form-header h2 {
+    font-family: 'Orbitron', monospace;
+    color: #c40000;
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .form-header h2 i {
+    margin-right: 10px;
+  }
+
+  .form-header p {
+    color: #aaa;
+  }
+
+  .form-card {
+    background: rgba(17,17,17,0.95);
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    padding: 40px 32px;
+    border: 1px solid rgba(196,0,0,0.3);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .form-group {
+    margin-bottom: 28px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #e0e0e0;
+    font-size: 1rem;
+  }
+
+  .form-group label i {
+    color: #c40000;
+    margin-right: 8px;
+  }
+
+  .form-group label span {
+    color: #c40000;
+  }
+
+  .form-group .hint {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 5px;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    transition: 0.2s;
+    font-family: inherit;
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: #c40000;
+    box-shadow: 0 0 0 2px rgba(196,0,0,0.2);
+  }
+
+  textarea {
+    min-height: 140px;
+    resize: vertical;
+  }
+
+  .btn {
+    background: linear-gradient(45deg, #c40000, #8b0000);
+    border: none;
+    padding: 14px 32px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 30px;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(196,0,0,0.4);
+  }
+
+  .btn:disabled {
+    background: #333;
+    cursor: not-allowed;
+  }
+
+  .status-msg {
+    margin-top: 20px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+
+  .status-msg.success {
+    background: #1f3a2f;
+    color: #6fdc8c;
+    border-left: 4px solid #2ecc71;
+  }
+
+  .status-msg.error {
+    background: #3a1f1f;
+    color: #ff8a8a;
+    border-left: 4px solid #e74c3c;
+  }
+
+  .status-msg.info {
+    background: #1f2a3a;
+    color: #8ab4ff;
+    border-left: 4px solid #4285f4;
+  }
+
+  .status-msg.warning {
+    background: #3a2e1f;
+    color: #ffcc66;
+    border-left: 4px solid #ffaa00;
+  }
+
+  .requirements {
+    background: rgba(13,13,13,0.9);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 30px;
+    border: 1px solid rgba(196,0,0,0.2);
+  }
+
+  .requirements h4 {
+    color: #c40000;
+    margin-bottom: 10px;
+  }
+
+  .requirements ul {
+    margin-left: 20px;
+    color: #bbb;
+  }
+
+  .requirements li {
+    margin: 8px 0;
+  }
+
+  /* Spam védelem jelző */
+  .security-badge {
+    background: rgba(0,0,0,0.5);
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 0.7rem;
+    text-align: center;
+    margin-top: 15px;
+    color: #888;
+    border: 1px solid #333;
+  }
+
+  .security-badge i {
+    color: #c40000;
+    margin-right: 5px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    background: #030303;
+    margin-top: 40px;
+    border-top: 1px solid rgba(196,0,0,0.2);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 24px 16px; }
+    .form-card { padding: 28px 20px; }
+    .form-header h2 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+<h1>ARMADA SECURITY</h1>
+<p>Premium Security Solutions</p>
+<a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Vissza a főoldalra</a>
+</header>
+
+<div class="container">
+  <div class="form-header">
+    <h2><i class="fas fa-user-shield"></i> Jelentkezés</h2>
+    <p>Csatlakozz az Armada Security elit csapatához</p>
+  </div>
+
+  <div class="form-card">
+    <form id="recruitmentForm">
+      <div class="form-group">
+        <label><i class="fas fa-mask"></i> IC Bemutatkozás (In Character) <span>*</span></label>
+        <textarea id="icBemutatkozas" placeholder="Írd be a karaktered bemutatkozását! 
+
+Példa:
+- Ki a karaktered? (név, kor, származás)
+- Milyen tapasztalataid vannak? 
+- Miért szeretne az Armada Security-nél dolgozni?
+- Milyen erősségei vannak?
+- Van-e korábbi munkatapasztalata ilyen téren?" required></textarea>
+        <div class="hint"><i class="fas fa-info-circle"></i> Ez a karaktered szemszögéből írt bemutatkozás!</div>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-user-circle"></i> OOC Bemutatkozás (Out of Character) <span>*</span></label>
+        <textarea id="oocBemutatkozas" placeholder="Írd be a valódi bemutatkozásodat!
+
+Példa:
+- Ki vagy valójában? (becenév, életkor, hobby)
+- Mennyi tapasztalatod van az rp-ben?
+- Mennyi időd van a játékra?
+- Voltál-e már frakcióban/cégnél?
+- Miért pont az Armada Security-t választottad?" required></textarea>
+        <div class="hint"><i class="fas fa-info-circle"></i> Téged szeretnénk megismerni, hogy a következő lépések során jobban tudjuk segíteni!</div>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-gamepad"></i> IC név <span>*</span></label>
+        <input type="text" id="icNev" placeholder="Pl. Kalap Ál, Lovoldoz Ock" required>
+        <div class="hint">A karaktered neve a játékban</div>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fab fa-discord"></i> Discord név <span>*</span></label>
+        <input type="text" id="discordNev" placeholder="Pl. j3l3ntk3zz" required>
+        <div class="hint">Ezen keresztül fogunk veled kapcsolatba lépni!</div>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-phone-alt"></i> IC telefonszám <span>*</span></label>
+        <input type="text" id="telefonszam" placeholder="Pl. +38-99-123-6769" required>
+      </div>
+
+      <!-- Honey pot mező (spam botok ellen) -->
+      <div style="display: none;">
+        <input type="text" id="honeypot" name="honeypot" value="">
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Jelentkezés elküldése</button>
+      <div id="formStatus" class="status-msg" style="display: none;"></div>
+      
+   
+
+  <div class="requirements">
+    <h4><i class="fas fa-clipboard-list"></i> Mit várunk el?</h4>
+    <ul>
+      <li> Önálló hosszútávú munkavégzés</li>
+      <li> Alapismerete a biztonság technikában</li>
+      <li> Megfelelő kommunikációs képesség </li>
+      <li> Elhivatottság, megfelelő fellépés</li>
+      <li> Csapatszellem</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+<p>© 2025 Armada Security – Minden jog fenntartva</p>
+</footer>
+
+<script>
+  // DISCORD WEBHOOK URL
+  const WEBHOOK_URL = "https://discord.com/api/webhooks/1479765572941123694/5ZsbybLpEQfbFu98but-xA9pmv-263RvIQ4VuEomd1w_PFmjtp-kl_iuqIy2zjzcSXfJ";
+
+  const form = document.getElementById('recruitmentForm');
+  const statusDiv = document.getElementById('formStatus');
+  const submitBtn = document.getElementById('submitBtn');
+
+  // ==================== SPAM VÉDELEM ====================
+  // Beadott jelentkezések nyomon követése
+  let submissions = JSON.parse(localStorage.getItem('armada_submissions') || '[]');
+  
+  // Cleanup - 1 óránál régebbi jelentkezések törlése
+  const oneHourAgo = Date.now() - 3600000;
+  submissions = submissions.filter(s => s.timestamp > oneHourAgo);
+  localStorage.setItem('armada_submissions', JSON.stringify(submissions));
+  
+  // Rate limit beállítások
+  const MAX_SUBMISSIONS_PER_IP = 3;      // Max 3 jelentkezés
+  const TIME_WINDOW_MINUTES = 10;        // 10 percen belül
+  const COOLDOWN_MINUTES = 5;            // 5 perc várakozás két jelentkezés között
+  
+  // Gyors hash függvény (egyszerű, de elég a célra)
+  function simpleHash(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    return Math.abs(hash).toString(36);
+  }
+  
+  // IP alapú azonosító (session storage + időbélyeg kombináció)
+  function getDeviceId() {
+    let deviceId = localStorage.getItem('armada_device_id');
+    if (!deviceId) {
+      deviceId = simpleHash(navigator.userAgent + screen.width + screen.height + (new Date()).getTimezoneOffset());
+      localStorage.setItem('armada_device_id', deviceId);
+    }
+    return deviceId;
+  }
+  
+  // Utolsó jelentkezés ideje
+  function getLastSubmissionTime() {
+    const last = localStorage.getItem('armada_last_submission');
+    return last ? parseInt(last) : 0;
+  }
+  
+  function setLastSubmissionTime() {
+    localStorage.setItem('armada_last_submission', Date.now().toString());
+  }
+  
+  // Jelentkezések számának ellenőrzése az időablakban
+  function checkRateLimit() {
+    const deviceId = getDeviceId();
+    const now = Date.now();
+    const timeWindow = TIME_WINDOW_MINUTES * 60 * 1000;
+    
+    // Szűrjük a deviceId-hoz tartozó jelentkezéseket az időablakban
+    const recentSubmissions = submissions.filter(s => 
+      s.deviceId === deviceId && (now - s.timestamp) < timeWindow
+    );
+    
+    if (recentSubmissions.length >= MAX_SUBMISSIONS_PER_IP) {
+      const oldestInWindow = recentSubmissions[recentSubmissions.length - 1]?.timestamp || now;
+      const waitMinutes = Math.ceil((timeWindow - (now - oldestInWindow)) / 60000);
+      return { allowed: false, reason: `Túl sok jelentkezés! Kérlek várj ${waitMinutes} percet.`, waitMinutes };
+    }
+    
+    // Cooldown ellenőrzés (két jelentkezés között)
+    const lastSubmission = getLastSubmissionTime();
+    if (lastSubmission && (now - lastSubmission) < COOLDOWN_MINUTES * 60 * 1000) {
+      const remainingSeconds = Math.ceil((COOLDOWN_MINUTES * 60 * 1000 - (now - lastSubmission)) / 1000);
+      const remainingMinutes = Math.ceil(remainingSeconds / 60);
+      return { allowed: false, reason: `Kérlek várj ${remainingMinutes} percet a következő jelentkezés előtt.`, waitMinutes: remainingMinutes };
+    }
+    
+    return { allowed: true, reason: null };
+  }
+  
+  // Duplikált jelentkezés ellenőrzés
+  function isDuplicateSubmission(icText, oocText, icNev, discordNev) {
+    const deviceId = getDeviceId();
+    const now = Date.now();
+    const oneHourMs = 3600000;
+    
+    // Hasonlóság ellenőrzése (egyszerű hash összehasonlítás)
+    const currentHash = simpleHash(icText + oocText + icNev + discordNev);
+    
+    const similarSubmission = submissions.find(s => 
+      s.deviceId === deviceId && 
+      (now - s.timestamp) < oneHourMs &&
+      s.hash === currentHash
+    );
+    
+    if (similarSubmission) {
+      return { isDuplicate: true, reason: "Úgy tűnik, már küldtél egy nagyon hasonló jelentkezést az elmúlt órában. Kérlek várj egy kicsit, mielőtt újra próbálkoznál!" };
+    }
+    
+    return { isDuplicate: false };
+  }
+  
+  // Gyanús szöveg ellenőrzés (spam, random karakterek)
+  function isSuspiciousContent(text) {
+    // Túl sok azonos karakter egymás után
+    if (/(.)\1{10,}/.test(text)) return true;
+    
+    // Túl sok szám vagy speciális karakter
+    const specialChars = (text.match(/[^a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s]/g) || []).length;
+    if (specialChars > text.length * 0.3) return true;
+    
+    // Túl rövid szavakból áll (spam)
+    const words = text.split(/\s+/);
+    const avgWordLength = words.reduce((sum, w) => sum + w.length, 0) / words.length;
+    if (avgWordLength < 2 && words.length > 10) return true;
+    
+    return false;
+  }
+  
+  // Jelentkezés rögzítése
+  function recordSubmission(icText, oocText, icNev, discordNev) {
+    const deviceId = getDeviceId();
+    const currentHash = simpleHash(icText + oocText + icNev + discordNev);
+    
+    submissions.push({
+      deviceId: deviceId,
+      timestamp: Date.now(),
+      hash: currentHash
+    });
+    
+    // Csak az utolsó 20 jelentkezést tároljuk
+    if (submissions.length > 20) {
+      submissions = submissions.slice(-20);
+    }
+    
+    localStorage.setItem('armada_submissions', JSON.stringify(submissions));
+    setLastSubmissionTime();
+  }
+
+  // ==================== AI HELYESÍRÁS-ELLENŐRZÉS ====================
+  const magyarSzavak = [
+    'a', 'az', 'egy', 'hogy', 'és', 'meg', 'nem', 'van', 'volt', 'lesz', 'volna', 'lenne',
+    'vagyok', 'vagy', 'vagyunk', 'vagytok', 'vannak', 'kell', 'kellett', 'kellene',
+    'szeretnék', 'szeretném', 'szeretlek', 'szereti', 'szeretjük', 'szeretitek', 'szeretik',
+    'mert', 'azt', 'ezt', 'ő', 'ők', 'mi', 'ti', 'én', 'te', 'maga', 'ön', 'maguk', 'önök',
+    'nagyon', 'jó', 'jobb', 'legjobb', 'rossz', 'rosszabb', 'legrosszabb', 'tapasztalat',
+    'csapat', 'biztonság', 'védelem', 'segíteni', 'dolgozni', 'tanulni', 'fejlődni',
+    'komoly', 'megbízható', 'gyors', 'reagálás', 'prevenció', 'jelentkezés', 'szerepjáték',
+    'karakter', 'tapasztalatom', 'játszottam', 'szerver', 'rendőr', 'biztonsági',
+    'őr', 'klub', 'rendezvény', 'éjszakai', 'munka', 'munkatapasztalat', 'erősség',
+    'gyengeség', 'kommunikáció', 'reakcióidő', 'időben', 'konfliktus', 'higgadt',
+    'csapatjátékos', 'fegyelem', 'lojalitás', 'problémamegoldó', 'szívesen', 'várom',
+    'köszönöm', 'kérlek', 'legyen', 'szerencsém', 'remélem'
+  ];
+
+  function checkSpelling(text) {
+    if (!text || text.length === 0) return { errorCount: 999, errorList: [], grade: "Nincs szöveg" };
+    
+    const words = text.toLowerCase().split(/\s+/);
+    let errorCount = 0;
+    let errorList = [];
+    
+    const magyarBetuk = /^[a-záéíóöőúüűA-ZÁÉÍÓÖŐÚÜŰ]+$/;
+    
+    for (let i = 0; i < words.length; i++) {
+      let word = words[i].replace(/[.,!?;:()\[\]{}"'`~@#$%^&*+=_\-<>|\\/]/g, '');
+      
+      if (word.length <= 2) continue;
+      if (!isNaN(word)) continue;
+      if (magyarSzavak.includes(word)) continue;
+      
+      if (word.length > 20 && !magyarSzavak.some(szó => word.includes(szó))) {
+        errorCount += 0.5;
+        if (errorList.length < 10) errorList.push(word);
+      }
+      else if (/[qwxc]/i.test(word) && word.length > 4 && !magyarSzavak.includes(word)) {
+        errorCount += 0.5;
+        if (errorList.length < 10) errorList.push(word);
+      }
+      else if (!magyarBetuk.test(word) && word.length > 5) {
+        errorCount += 0.5;
+        if (errorList.length < 10) errorList.push(word);
+      }
+    }
+    
+    errorCount = Math.floor(errorCount);
+    
+    let grade = "";
+    if (errorCount === 0) grade = "🏆 Kiváló - Nincs helyesírási hiba";
+    else if (errorCount <= 2) grade = "✅ Jó - Csak néhány apró hiba";
+    else if (errorCount <= 5) grade = "⚠️ Elfogadható - Néhány helyesírási hiba, de érthető";
+    else if (errorCount <= 10) grade = "❌ Gyenge - Több helyesírási hiba";
+    else grade = "🔴 Elfogadhatatlan - Sok helyesírási hiba";
+    
+    return { errorCount: errorCount, errorList: errorList, grade: grade, errorRate: (errorCount / words.length) * 100 };
+  }
+
+  // ==================== AI ANALÍZIS ====================
+  function aiAnalyzeApplication(icText, oocText, icNev, discordNev, telefonszam) {
+    
+    const icSpelling = checkSpelling(icText);
+    const oocSpelling = checkSpelling(oocText);
+    
+    // IC elemzés
+    let icScore = 0;
+    let icLength = icText.length;
+    let icDetails = [];
+    
+    if (icLength >= 200) { icScore += 4; icDetails.push("✅ Részletes IC bemutatkozás"); }
+    else if (icLength >= 100) { icScore += 3; icDetails.push("✅ Megfelelő hosszúságú IC bemutatkozás"); }
+    else if (icLength >= 60) { icScore += 2; icDetails.push("⚠️ Közepes hosszúságú IC bemutatkozás"); }
+    else if (icLength >= 40) { icScore += 1; icDetails.push("⚠️ Rövid IC bemutatkozás, de elfogadható"); }
+    else { icScore += 0; icDetails.push("❌ Túl rövid IC bemutatkozás"); }
+    
+    const icKeywords = ['biztonság', 'védelem', 'őr', 'tapasztalat', 'klub', 'rendezvény', 'csapat', 'megbízható', 'gyors', 'reagál', 'fegyelmezett', 'lojális', 'konfliktus', 'kommunikáció'];
+    let icKeywordCount = 0;
+    icKeywords.forEach(kw => { if (icText.toLowerCase().includes(kw)) icKeywordCount++; });
+    icScore += Math.min(icKeywordCount, 4);
+    icDetails.push(`📊 IC kulcsszavak: ${icKeywordCount}/4`);
+    
+    // OOC elemzés
+    let oocScore = 0;
+    let oocLength = oocText.length;
+    let oocDetails = [];
+    
+    if (oocLength >= 180) { oocScore += 4; oocDetails.push("✅ Részletes OOC bemutatkozás"); }
+    else if (oocLength >= 80) { oocScore += 3; oocDetails.push("✅ Megfelelő hosszúságú OOC bemutatkozás"); }
+    else if (oocLength >= 50) { oocScore += 2; oocDetails.push("⚠️ Közepes hosszúságú OOC bemutatkozás"); }
+    else if (oocLength >= 30) { oocScore += 1; oocDetails.push("⚠️ Rövid OOC bemutatkozás, de elfogadható"); }
+    else { oocScore += 0; oocDetails.push("❌ Túl rövid OOC bemutatkozás"); }
+    
+    const oocKeywords = ['tapasztalat', 'szerver', 'rendőr', 'biztonsági', 'játszottam', 'csapat', 'komoly', 'megbízható', 'aktív', 'szerepjáték'];
+    let oocKeywordCount = 0;
+    oocKeywords.forEach(kw => { if (oocText.toLowerCase().includes(kw)) oocKeywordCount++; });
+    oocScore += Math.min(oocKeywordCount, 4);
+    oocDetails.push(`📊 OOC kulcsszavak: ${oocKeywordCount}/4`);
+    
+    // Helyesírás pontozás
+    let icSpellingScore = 0;
+    if (icSpelling.errorCount <= 2) icSpellingScore = 3;
+    else if (icSpelling.errorCount <= 5) icSpellingScore = 2;
+    else if (icSpelling.errorCount <= 10) icSpellingScore = 1;
+    else icSpellingScore = 0;
+    
+    let oocSpellingScore = 0;
+    if (oocSpelling.errorCount <= 2) oocSpellingScore = 3;
+    else if (oocSpelling.errorCount <= 5) oocSpellingScore = 2;
+    else if (oocSpelling.errorCount <= 10) oocSpellingScore = 1;
+    else oocSpellingScore = 0;
+    
+    let totalScore = icScore + oocScore + icSpellingScore + oocSpellingScore;
+    totalScore = Math.max(0, Math.min(22, totalScore));
+    
+    const percentage = Math.round((totalScore / 22) * 100);
+    
+    let verdict = "";
+    let verdictColor = "";
+    let recommendation = "";
+    let aiOpinion = "";
+    let shortVerdict = "";
+    
+    if (percentage >= 60) {
+      verdict = "AJÁNLOTT";
+      verdictColor = "🟢";
+      recommendation = "FELVENNÉM";
+      shortVerdict = "POZITÍV";
+      aiOpinion = `A jelentkező jó potenciállal rendelkezik. A bemutatkozása alapján megbízhatónak tűnik, érdemes lenne egy próbaidőszakkal tesztelni. ${icScore < 6 ? "Az IC részen lehetne még bővebben írni, de így is elfogadható." : "Az IC bemutatkozása különösen részletes és meggyőző."}`;
+    } else if (percentage >= 35) {
+      verdict = "FELTÉTELESEN AJÁNLOTT";
+      verdictColor = "🟡";
+      recommendation = "FELVÉTELE FELTÉTELEZETT";
+      shortVerdict = "VEGYES";
+      aiOpinion = `A jelentkező közepes potenciállal rendelkezik. Van némi tapasztalata, de a bemutatkozásban vannak hiányosságok. Javasolt egy személyes beszélgetés a pontosabb megítéléshez.`;
+    } else {
+      verdict = "NEM AJÁNLOTT";
+      verdictColor = "🔴";
+      recommendation = "NEM VENNÉM FEL";
+      shortVerdict = "NEGATÍV";
+      aiOpinion = `A jelentkező jelenleg nem felel meg az elvárásoknak. A bemutatkozása túl rövid vagy nem tartalmazza a szükséges információkat. Javasolt, hogy egy részletesebb jelentkezéssel próbálkozzon újra.`;
+    }
+    
+    return {
+      score: totalScore,
+      percentage: percentage,
+      verdict: verdict,
+      verdictColor: verdictColor,
+      recommendation: recommendation,
+      shortVerdict: shortVerdict,
+      aiOpinion: aiOpinion,
+      ic: {
+        length: icLength,
+        score: icScore,
+        details: icDetails,
+        spelling: icSpelling
+      },
+      ooc: {
+        length: oocLength,
+        score: oocScore,
+        details: oocDetails,
+        spelling: oocSpelling
+      }
+    };
+  }
+
+  async function sendToDiscord(data, aiResult) {
+    let embedColor = 0xe74c3c;
+    if (aiResult.percentage >= 60) embedColor = 0x2ecc71;
+    else if (aiResult.percentage >= 35) embedColor = 0xf1c40f;
+    
+    const embed = {
+      title: "🛡️ ÚJ JELENTKEZÉS - Armada Security",
+      color: embedColor,
+      fields: [
+        { name: "🎮 IC név", value: data.icNev, inline: true },
+        { name: "💬 Discord név", value: data.discordNev, inline: true },
+        { name: "📞 IC telefonszám", value: data.telefonszam, inline: true },
+        { name: "━━━━━━━━━━━━━━━━━━━━", value: "🤖 AI ELEMZÉS", inline: false },
+        { name: "📊 Összpontszám", value: `${aiResult.score}/22 pont (${aiResult.percentage}%)`, inline: true },
+        { name: "⚖️ Döntés", value: `${aiResult.verdictColor} ${aiResult.verdict}`, inline: true },
+        { name: "🎯 Ajánlás", value: `${aiResult.recommendation}`, inline: true },
+        { name: "🧠 AI Vélemény", value: aiResult.aiOpinion, inline: false },
+        { name: "━━━━━━━━━━━━━━━━━━━━", value: "📝 IC BEMUTATKOZÁS", inline: false },
+        { name: "Tartalom", value: data.icBemutatkozas.length > 500 ? data.icBemutatkozas.substring(0, 500) + "..." : data.icBemutatkozas, inline: false },
+        { name: "IC Elemzés", value: `Hossz: ${aiResult.ic.length} karakter\nPontszám: ${aiResult.ic.score}/11\n${aiResult.ic.details.join('\n')}\nHelyesírás: ${aiResult.ic.spelling.grade}`, inline: false },
+        { name: "━━━━━━━━━━━━━━━━━━━━", value: "📝 OOC BEMUTATKOZÁS", inline: false },
+        { name: "Tartalom", value: data.oocBemutatkozas.length > 500 ? data.oocBemutatkozas.substring(0, 500) + "..." : data.oocBemutatkozas, inline: false },
+        { name: "OOC Elemzés", value: `Hossz: ${aiResult.ooc.length} karakter\nPontszám: ${aiResult.ooc.score}/11\n${aiResult.ooc.details.join('\n')}\nHelyesírás: ${aiResult.ooc.spelling.grade}`, inline: false }
+      ],
+      timestamp: new Date().toISOString(),
+      footer: { text: `Armada Security - AI Recruitment System | Eredmény: ${aiResult.shortVerdict} | IP: ${getDeviceId().substring(0, 8)}`, icon_url: "https://cdn-icons-png.flaticon.com/512/190/190411.png" }
+    };
+
+    const payload = {
+      username: "Armada Security Recruit",
+      avatar_url: "https://cdn-icons-png.flaticon.com/512/190/190411.png",
+      embeds: [embed]
+    };
+
+    try {
+      const response = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status} - ${errorText}`);
+      }
+      return true;
+    } catch (error) {
+      console.error("Webhook hiba:", error);
+      return false;
+    }
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // HONEYPOT ellenőrzés (spam botok ellen)
+    const honeypot = document.getElementById('honeypot').value;
+    if (honeypot !== "") {
+      statusDiv.style.display = "block";
+      statusDiv.className = "status-msg error";
+      statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ⚠️ A jelentkezésedet spamként azonosítottuk.';
+      return;
+    }
+
+    const icBemutatkozas = document.getElementById('icBemutatkozas').value.trim();
+    const oocBemutatkozas = document.getElementById('oocBemutatkozas').value.trim();
+    const icNev = document.getElementById('icNev').value.trim();
+    const discordNev = document.getElementById('discordNev').value.trim();
+    const telefonszam = document.getElementById('telefonszam').value.trim();
+
+    if (!icBemutatkozas || !oocBemutatkozas || !icNev || !discordNev || !telefonszam) {
+      statusDiv.style.display = "block";
+      statusDiv.className = "status-msg error";
+      statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Minden mező kitöltése kötelező!';
+      return;
+    }
+
+    if (icBemutatkozas.length < 40) {
+      statusDiv.style.display = "block";
+      statusDiv.className = "status-msg error";
+      statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Az IC bemutatkozás túl rövid! Minimum 40 karakter.';
+      return;
+    }
+
+    if (oocBemutatkozas.length < 30) {
+      statusDiv.style.display = "block";
+      statusDiv.className = "status-msg error";
+      statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Az OOC bemutatkozás túl rövid! Minimum 30 karakter.';
+      return;
+    }
+
+    // Gyanús tartalom ellenőrzés
+    if (isSuspiciousContent(icBemutatkozas) || isSuspiciousContent(oocBemutatkozas)) {
+      statusDiv.style.display = "block";
+      statusDiv.className = "status-msg error";
+      statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> A jelentkezésed gyanús mintázatot mutat. Kérlek normálisan töltsd ki az űrlapot!';
+      return;
+    }
+
+    // RATE LIMIT ELLENŐRZÉS
+    const rateLimit = checkRateLimit();
+    if (!rateLimit.allowed) {
+      statusDiv.style.display = "block";
+      statusDiv.className = "status-msg warning";
+      statusDiv.innerHTML = `<i class="fas fa-clock"></i> ${rateLimit.reason}`;
+      return;
+    }
+
+    // DUPLIKÁLT JELENTKEZÉS ELLENŐRZÉS
+    const duplicate = isDuplicateSubmission(icBemutatkozas, oocBemutatkozas, icNev, discordNev);
+    if (duplicate.isDuplicate) {
+      statusDiv.style.display = "block";
+      statusDiv.className = "status-msg warning";
+      statusDiv.innerHTML = `<i class="fas fa-copy"></i> ${duplicate.reason}`;
+      return;
+    }
+
+    statusDiv.style.display = "block";
+    statusDiv.className = "status-msg info";
+    statusDiv.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Jelentkezés feldolgozása és AI elemzés...';
+    submitBtn.disabled = true;
+
+    const aiResult = aiAnalyzeApplication(icBemutatkozas, oocBemutatkozas, icNev, discordNev, telefonszam);
+    
+    const formData = {
+      icBemutatkozas: icBemutatkozas,
+      oocBemutatkozas: oocBemutatkozas,
+      icNev: icNev,
+      discordNev: discordNev,
+      telefonszam: telefonszam
+    };
+
+    const success = await sendToDiscord(formData, aiResult);
+
+    if (success) {
+      // Sikeres jelentkezés rögzítése
+      recordSubmission(icBemutatkozas, oocBemutatkozas, icNev, discordNev);
+      
+      statusDiv.className = "status-msg success";
+      statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> ✅ Sikeres jelentkezés! Köszönjük, hogy az Armada Security-t választottad. Csapatunk hamarosan felveszi veled a kapcsolatot Discordon!';
+      form.reset();
+    } else {
+      statusDiv.className = "status-msg error";
+      statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ⚠️ Hiba történt a jelentkezés elküldésekor. Kérlek próbáld újra később!';
+    }
+    
+    submitBtn.disabled = false;
+    
+    setTimeout(() => {
+      if (statusDiv.className !== "status-msg info") {
+        statusDiv.style.display = "none";
+      }
+    }, 8000);
+  });
+</script>
+</body>
+</html>
